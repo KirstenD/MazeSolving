@@ -1,7 +1,11 @@
+"use of algrothim from https://en.wikipedia.org/wiki/Maze_generation_algorithm"""
+
 import numpy
 from numpy.random import random_integers as rand
 import matplotlib.pyplot as pyplot
 import sys
+
+
 
 def maze(width=81, height=51, complexity=.75, density=.75):
     # Only odd shapes
@@ -27,10 +31,10 @@ def maze(width=81, height=51, complexity=.75, density=.75):
             if len(neighbours):
                 y_,x_ = neighbours[rand(0, len(neighbours) - 1)]
                 if Z[y_, x_] == 0:
-                    Z[y_, x_] = 1
+                   Z[y_, x_] = 1
                     Z[y_ + (y - y_) // 2, x_ + (x - x_) // 2] = 1
                     x, y = x_, y_
-    #Z = Z.tolist()
+    Z = Z.tolist()
     return Z
 
 
@@ -48,9 +52,9 @@ def main():
     rows = int(sys.argv[1])
     cols = int(sys.argv[2])
     x = maze(rows, cols)
-    #x1 = convertToArray(x)
-    #print(x1)
-    display(x)
+    x1 = convertToArray(x)
+    print(x1)
+    #display(x)
 main()
 
 

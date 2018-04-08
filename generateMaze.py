@@ -4,7 +4,7 @@ import numpy
 from numpy.random import random_integers as rand
 import matplotlib.pyplot as pyplot
 import sys
-
+import random
 
 
 def maze(width=81, height=51, complexity=.75, density=.75):
@@ -32,9 +32,9 @@ def maze(width=81, height=51, complexity=.75, density=.75):
                 y_,x_ = neighbours[rand(0, len(neighbours) - 1)]
                 if Z[y_, x_] == 0:
                    Z[y_, x_] = 1
-                    Z[y_ + (y - y_) // 2, x_ + (x - x_) // 2] = 1
-                    x, y = x_, y_
-    Z = Z.tolist()
+                   Z[y_ + (y - y_) // 2, x_ + (x - x_) // 2] = 1
+                   x, y = x_, y_
+    #Z = Z.tolist()
     return Z
 
 
@@ -48,13 +48,49 @@ def convertToArray(mazeX):
     mazeMatrix = mazeX.tolist()
     return mazeMatrix
 
-def main():
-    rows = int(sys.argv[1])
-    cols = int(sys.argv[2])
-    x = maze(rows, cols)
-    x1 = convertToArray(x)
-    print(x1)
-    #display(x)
-main()
+def startPoint(maze):
+    randX = random.randint(1,len(maze[0])-1)
+    randY = random.randint(1,len(maze)-1)
+    while(maze[randY][randX] =='True'):
+        randX = random.randint(1,len(maze[0])-1)
+        randY = random.randint(1,len(maze)-1)
+    return (randX,randY)
+
+def endPoint(maze,startPoint):
+    randX = random.randint(1,len(maze[0])-1)
+    randY = random.randint(1,len(maze)-1)
+    while((maze[randY][randX] =='True') and (startPoint ==(randX,randY))):
+        randX = random.randint(1,len(maze[0])-1)
+        randY = random.randint(1,len(maze)-1)
+
+    return (randX,randY)
+def mazeChange(maze,col, row):
+    maze2= [] 
+    for i in range(0, len(maze)):
+        mazeX = []
+        for j in  range(0, len(maze[0])):
+                mazeX.append(str(maze[i][j]))
+        maze2.append(mazeX)
+    return maze2
+
+def startEnd(maze):
+    x = mazeChange(maze, cols, rows) 
+    start = startPoint( x)
+    end = endPoint( x, start)
+    #x[start[1]][start[0]] = "S"
+    #x[end[1]][end[0]] = "E"
+    return (start,end)
+
+
+#def main():
+rows = int(sys.argv[1])
+cols = int(sys.argv[2])
+x = maze(rows, cols)
+x1 = convertToArray(x)
+#print(x1)
+#display(x)
+maze1 = mazeChange(x1,cols,rows)
+intial = startEnd(maze1)
+#main()
 
 

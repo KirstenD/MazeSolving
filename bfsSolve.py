@@ -60,9 +60,9 @@ def printMaze(mazeIn):
 def bfsSearch(mazeInitial, startNode,endValue):
     print("in breaht first hsearch")
     q = queue.LifoQueue()
-    q.put_nowait(startNode)
     startNode.visited = 'v'
     startNode.dist = 0
+    q.put_nowait(startNode)
     while (not q.empty()):
         v = q.get_nowait()
 

@@ -1,7 +1,8 @@
-from multiprocessing import Queue
+#from multiprocessing import Queue
+#from collections import deque
 import generateMaze as gm
 from mpi4py import MPI
-
+import queue
 class Node():
     def __init__(self, x,y):
         self.x = x
@@ -36,10 +37,10 @@ def makeMazeNodes(mazeIn,start, end):
         row = []
         for j in range(len(mazeIn[0])):
         
-            newNode = Node(i,j)
-            if((i,j)==start):
+            newNode = Node(j,i)
+            if((j,i)==start):
                 newNode.startEnd='y'
-            if((i,j)==end):
+            if((j,i)==end):
                 newNode.startEnd='y'
             x = mazeIn[i][j] == 'True'
             if(x):
@@ -56,37 +57,59 @@ def printMaze(mazeIn):
         for j in range(len(mazeIn[0])):
             x += "  :   " +mazeIn[i][j].open 
         print(x)
-def bfsSearch(mazeInitial, startNode):
+def bfsSearch(mazeInitial, startNode,endValue):
     print("in breaht first hsearch")
-    q = Queue()
-    q.put(startNode)
+    q = queue.LifoQueue()
+    q.put_nowait(startNode)
     startNode.visited = 'v'
     startNode.dist = 0
-    while ( q.empty()):
-        v = q.get()
-        print(v.x, v.y)
-        if(v.y+1 < len(mazeInitial[0])):
-            top = mazeInitial[v.x][v.y+1] 
-        else:
-            top =Node(0,0)
-        if(v.y -1 >0):
-            bottom = mazeInitial[v.x][v.y-1]
-        else:
+    while (not q.empty()):
+        v = q.get_nowait()
 
-            bottom =Node(0,0)
-        if(v.x+1 < len(mazeInitial)):
-            right= mazeInitial[v.x+1][v.y]
-        else:
-            right = Node(0,0)
+        if(endValue[0] == v.x  and endValue[1] ==v.y):
+            print(v.x, v.y, v.parent)
+            break
+        if(v.parent != None):
+
+            print(v.x, v.y, (v.parent.x, v.parent.y))
+        else: 
+            print(v.x, v.y, v.parent)
+        if(v.x+1 < len(mazeInitial[0])):
+            node = mazeInitial[v.y][v.x+1]
+            print(node.visited)
+            if node.visited!= 'v' and node.open =='y':
+                node.visited = 'v'
+                node.parent = v
+                q.put_nowait(node)
+
+            mazeInitial[v.y][v.x+1] =node
         if(v.x-1 > 0):
-            left = mazeInitial[v.x-1][v.y] 
-        else:
-            left = Node(0,0)
-        for neighbour in [top,bottom,left,right]:
-            if neighbour.visited!= 'v' or neighbour.open =='y':
-                neighbour.visited = 'v'
-                neighbour.parent = v
-                q.put(neighbour)
+            node = mazeInitial[v.y][v.x-1] 
+            if node.visited!= 'v' and node.open =='y':
+                node.visited = 'v'
+                node.parent = v
+                q.put_nowait(node)
+
+            mazeInitial[v.y][v.x-1] =node
+
+
+        if(v.y+1 < len(mazeInitial)):
+            node = mazeInitial[v.y+1][v.x] 
+            if (node.visited != 'v' and node.open =='y'):
+                node.visited = 'v'
+                node.parent = v
+                q.put_nowait(node)
+
+            mazeInitial[v.y+1][v.x] =node
+
+        if(v.y-1 > 0):
+            node = mazeInitial[v.y-1][v.x] 
+            if node.visited!= 'v' and node.open =='y':
+                node.visited = 'v'
+                node.parent = v
+                q.put_nowait(node)
+
+            mazeInitial[v.y-1][v.x] =node
 
 maze = gm.maze1
 
@@ -95,8 +118,8 @@ end = gm.intial[1]
 outMaze = makeMazeNodes(maze, start,end)
 printMaze(outMaze)
 startNode = outMaze[start[1]][start[0]]
-bfsSearch(outMaze, startNode)
-
+print((start[0],start[1]), (end[0],end[1]))
+bfsSearch(outMaze, startNode,end)
 
 
 

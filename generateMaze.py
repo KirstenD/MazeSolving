@@ -49,19 +49,19 @@ def convertToArray(mazeX):
     return mazeMatrix
 
 def startPoint(maze):
-    randX = random.randint(1,len(maze[0])-1)
-    randY = random.randint(1,len(maze)-1)
+    randX = random.randint(1,len(maze[0])-2)
+    randY = random.randint(1,len(maze)-2)
     while(maze[randY][randX] =='True'):
-        randX = random.randint(1,len(maze[0])-1)
-        randY = random.randint(1,len(maze)-1)
+        randX = random.randint(1,len(maze[0])-2)
+        randY = random.randint(1,len(maze)-2)
     return (randX,randY)
 
 def endPoint(maze,startPoint):
-    randX = random.randint(1,len(maze[0])-1)
-    randY = random.randint(1,len(maze)-1)
+    randX = random.randint(1,len(maze[0])-2)
+    randY = random.randint(1,len(maze)-2)
     while((maze[randY][randX] =='True') and (startPoint ==(randX,randY))):
-        randX = random.randint(1,len(maze[0])-1)
-        randY = random.randint(1,len(maze)-1)
+        randX = random.randint(1,len(maze[0])-2)
+        randY = random.randint(1,len(maze)-2)
 
     return (randX,randY)
 def mazeChange(maze,col, row):

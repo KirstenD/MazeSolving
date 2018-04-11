@@ -73,7 +73,7 @@ def mazeChange(maze,col, row):
         maze2.append(mazeX)
     return maze2
 
-def startEnd(maze):
+def startEnd(maze,cols,rows):
     x = mazeChange(maze, cols, rows) 
     start = startPoint( x)
     end = endPoint( x, start)
@@ -81,16 +81,13 @@ def startEnd(maze):
     #x[end[1]][end[0]] = "E"
     return (start,end)
 
+def gen(rows, cols):
 
-#def main():
-rows = int(sys.argv[1])
-cols = int(sys.argv[2])
-x = maze(rows, cols)
-x1 = convertToArray(x)
-#print(x1)
-#display(x)
-maze1 = mazeChange(x1,cols,rows)
-intial = startEnd(maze1)
-#main()
-
+    #rows = int(sys.argv[1])
+    #cols = int(sys.argv[2])
+    x = maze(rows, cols)
+    x1 = convertToArray(x)
+    maze1 = mazeChange(x1,cols,rows)
+    intial = startEnd(maze1,cols,rows)
+    return (maze1, intial)
 

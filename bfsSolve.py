@@ -3,6 +3,7 @@
 import generateMaze as gm
 from mpi4py import MPI
 import queue
+import sys
 class Node():
     def __init__(self, x,y):
         self.x = x
@@ -38,9 +39,9 @@ def makeMazeNodes(mazeIn,start, end):
         for j in range(len(mazeIn[0])):
         
             newNode = Node(j,i)
-            if((j,i)==start):
+            if((i,j)==start):
                 newNode.startEnd='y'
-            if((j,i)==end):
+            if((i,j)==end):
                 newNode.startEnd='y'
             x = mazeIn[i][j] == 'True'
             if(x):
@@ -58,28 +59,88 @@ def printMaze(mazeIn):
             x += "  :   " +mazeIn[i][j].open 
         print(x)
 def bfsSearch(mazeInitial, startNode,endValue):
-    print("in breaht first hsearch")
+    q = queue.LifoQueue()
+    startNode.visited = 'v'
+    startNode.dist = 0
+    q.put_nowait(startNode)
+    v = None
+    while (not q.empty()):
+        v = q.get_nowait()
+
+        if(endValue[0] == v.x  and endValue[1] ==v.y):
+            print(v.x, v.y, v.parent,v.dist)
+            break
+        else:
+            if(v.parent != None):
+                pass
+                print(v.x, v.y, (v.parent.x, v.parent.y))
+            else: 
+                pass
+                print(v.x, v.y, v.parent)
+            if(v.x+1 < len(mazeInitial[0])):
+                node = mazeInitial[v.y][v.x+1]
+                if node.visited!= 'v' and node.open =='y':
+                    node.visited = 'v'
+                    node.parent = v
+                    node.dist = node.parent.dist +1
+                    q.put_nowait(node)
+
+                mazeInitial[v.y][v.x+1] =node
+            if(v.x-1 > 0):
+                node = mazeInitial[v.y][v.x-1] 
+                if node.visited!= 'v' and node.open =='y':
+                    node.visited = 'v'
+                    node.parent = v
+                    node.dist = node.parent.dist +1
+                    q.put_nowait(node)
+
+                mazeInitial[v.y][v.x-1] =node
+
+
+            if(v.y+1 < len(mazeInitial)):
+                node = mazeInitial[v.y+1][v.x] 
+                if (node.visited != 'v' and node.open =='y'):
+                    node.visited = 'v'
+                    node.parent = v
+                    node.dist = node.parent.dist +1
+                    q.put_nowait(node)
+
+                mazeInitial[v.y+1][v.x] =node
+
+            if(v.y-1 > 0):
+                node = mazeInitial[v.y-1][v.x] 
+                if node.visited!= 'v' and node.open =='y':
+                    node.visited = 'v'
+                    node.parent = v
+                    node.dist = node.parent.dist +1
+                    q.put_nowait(node)
+
+                mazeInitial[v.y-1][v.x] =node
+
+    print(v.x, v.y, v.parent,v.dist)
+
+def bfsSearchPrint(mazeInitial, startNode,endValue):
     q = queue.LifoQueue()
     startNode.visited = 'v'
     startNode.dist = 0
     q.put_nowait(startNode)
     while (not q.empty()):
         v = q.get_nowait()
-
         if(endValue[0] == v.x  and endValue[1] ==v.y):
-            print(v.x, v.y, v.parent)
+            print(v.x, v.y, v.parent,v.dist)
             break
         if(v.parent != None):
-
-            print(v.x, v.y, (v.parent.x, v.parent.y))
+            pass
+            #print(v.x, v.y, (v.parent.x, v.parent.y))
         else: 
-            print(v.x, v.y, v.parent)
+            pass
+            #print(v.x, v.y, v.parent)
         if(v.x+1 < len(mazeInitial[0])):
             node = mazeInitial[v.y][v.x+1]
-            print(node.visited)
             if node.visited!= 'v' and node.open =='y':
                 node.visited = 'v'
                 node.parent = v
+                node.dist = node.parent.dist +1
                 q.put_nowait(node)
 
             mazeInitial[v.y][v.x+1] =node
@@ -88,6 +149,7 @@ def bfsSearch(mazeInitial, startNode,endValue):
             if node.visited!= 'v' and node.open =='y':
                 node.visited = 'v'
                 node.parent = v
+                node.dist = node.parent.dist +1
                 q.put_nowait(node)
 
             mazeInitial[v.y][v.x-1] =node
@@ -98,6 +160,7 @@ def bfsSearch(mazeInitial, startNode,endValue):
             if (node.visited != 'v' and node.open =='y'):
                 node.visited = 'v'
                 node.parent = v
+                node.dist = node.parent.dist +1
                 q.put_nowait(node)
 
             mazeInitial[v.y+1][v.x] =node
@@ -107,15 +170,24 @@ def bfsSearch(mazeInitial, startNode,endValue):
             if node.visited!= 'v' and node.open =='y':
                 node.visited = 'v'
                 node.parent = v
+                node.dist = node.parent.dist +1
                 q.put_nowait(node)
 
             mazeInitial[v.y-1][v.x] =node
 
-maze = gm.maze1
 
-start = gm.intial[0]
-end = gm.intial[1]
+(maze,inital) = gm.gen(int(sys.argv[1]),int(sys.argv[2]))
+
+start = inital[0]
+end = inital[1]
+
 outMaze = makeMazeNodes(maze, start,end)
+while(outMaze[start[1]][start[0]].open == 'n'or outMaze[end[1]][end[0]].open == 'n' ):
+    (maze,inital) = gm.gen(int(sys.argv[1]),int(sys.argv[2]))
+    start = inital[0]
+    end = inital[1]
+
+    outMaze = makeMazeNodes(maze, start,end)
 printMaze(outMaze)
 startNode = outMaze[start[1]][start[0]]
 print((start[0],start[1]), (end[0],end[1]))

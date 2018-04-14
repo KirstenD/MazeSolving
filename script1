@@ -1,0 +1,57 @@
+echo "output 5 5 ">>output1
+
+c:/python27/python.exe bfsSolve.py 5 5 >>output1
+c:/python27/python.exe bfsSolve.py 5 5 >>output1
+c:/python27/python.exe bfsSolve.py 5 5 >>output1
+c:/python27/python.exe bfsSolve.py 5 5 >>output1
+c:/python27/python.exe bfsSolve.py 5 5 >>output1
+c:/python27/python.exe bfsSolve.py 5 5 >>output1
+
+echo "output 10 10 ">>output1
+
+c:/python27/python.exe bfsSolve.py 10 10 >>output1
+c:/python27/python.exe bfsSolve.py 10 10 >>output1
+c:/python27/python.exe bfsSolve.py 10 10 >>output1
+c:/python27/python.exe bfsSolve.py 10 10 >>output1
+c:/python27/python.exe bfsSolve.py 10 10 >>output1
+c:/python27/python.exe bfsSolve.py 10 10 >>output1
+echo "output 50 50 ">>output1
+
+c:/python27/python.exe bfsSolve.py 50 50 >>output1
+c:/python27/python.exe bfsSolve.py 50 50 >>output1
+c:/python27/python.exe bfsSolve.py 50 50 >>output1
+c:/python27/python.exe bfsSolve.py 50 50 >>output1
+c:/python27/python.exe bfsSolve.py 50 50 >>output1
+c:/python27/python.exe bfsSolve.py 50 50 >>output1
+echo "output 100 100 ">>output1
+
+c:/python27/python.exe bfsSolve.py 100 100 >>output1
+c:/python27/python.exe bfsSolve.py 100 100 >>output1
+c:/python27/python.exe bfsSolve.py 100 100 >>output1
+c:/python27/python.exe bfsSolve.py 100 100 >>output1
+c:/python27/python.exe bfsSolve.py 100 100 >>output1
+c:/python27/python.exe bfsSolve.py 100 100 >>output1
+echo "output 500 500 ">>output1
+
+c:/python27/python.exe bfsSolve.py 500 500 >>output1
+c:/python27/python.exe bfsSolve.py 500 500 >>output1
+c:/python27/python.exe bfsSolve.py 500 500 >>output1
+c:/python27/python.exe bfsSolve.py 500 500 >>output1
+c:/python27/python.exe bfsSolve.py 500 500 >>output1
+c:/python27/python.exe bfsSolve.py 500 500 >>output1
+echo "output 1000 1000 ">>output1
+
+c:/python27/python.exe bfsSolve.py 1000 1000 >>output1
+c:/python27/python.exe bfsSolve.py 1000 1000 >>output1
+c:/python27/python.exe bfsSolve.py 1000 1000 >>output1
+c:/python27/python.exe bfsSolve.py 1000 1000 >>output1
+c:/python27/python.exe bfsSolve.py 1000 1000 >>output1
+c:/python27/python.exe bfsSolve.py 1000 1000 >>output1
+echo "output 2500 2500 ">>output1
+
+c:/python27/python.exe bfsSolve.py 2500 2500 >>output1
+c:/python27/python.exe bfsSolve.py 2500 2500 >>output1
+c:/python27/python.exe bfsSolve.py 2500 2500 >>output1
+c:/python27/python.exe bfsSolve.py 2500 2500 >>output1
+c:/python27/python.exe bfsSolve.py 2500 2500 >>output1
+c:/python27/python.exe bfsSolve.py 2500 2500 >>output1
